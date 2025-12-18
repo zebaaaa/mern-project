@@ -7,3 +7,4 @@ Dockerfile
 Jenkinsfile
 README.md
 .env
+npm-debug.log
