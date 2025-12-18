@@ -23,7 +23,7 @@ pipeline {
     stage('Build Backend Image') {
       steps {
         sh '''
-        docker build -t mern-app:$IMAGE_TAG backend
+        docker build -t mern-app:$IMAGE_TAG .
         '''
       }
     }
