@@ -2,14 +2,18 @@ pipeline {
   agent any
 
   environment {
-    REGION = "us-east-1"
-    ECR_REPO_URI = "329668418627.dkr.ecr.us-east-1.amazonaws.com/mern-app"
+    REGION = "ap-south-1"
+    ECR_REPO_URI = "329668418627.dkr.ecr.ap-south-1.amazonaws.com/mern-app"
     IMAGE_TAG = "latest"
   }
 
   stages {
 
-    
+    stage("Checkout Latest Code") {
+      steps {
+        git branch: 'main', url: 'https://github.com/zebaaaa/mern-app.git'
+      }
+    }
 
     stage('Login to ECR') {
       steps {
