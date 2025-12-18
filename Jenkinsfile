@@ -9,11 +9,7 @@ pipeline {
 
   stages {
 
-    stage('Clone Repo') {
-      steps {
-        git 'https://github.com/zebaaaa/mern-project.git'
-      }
-    }
+    
 
     stage('Login to ECR') {
       steps {
