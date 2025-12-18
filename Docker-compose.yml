@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+  app:
+    image: 329668418627.dkr.ecr.ap-south-1.amazonaws.com/mern-app:latest
+    container_name: mern-app
+    restart: always
+    ports:
+      - "80:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mern_deploy
+
+volumes:
+  mongo_data:
