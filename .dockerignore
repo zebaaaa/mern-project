@@ -1,6 +1,8 @@
-.dockerfile: 
 node_modules
 frontend/node_modules
 backend/node_modules
 .git
-...
+.gitignore
+Dockerfile
+docker-compose.yml
+Jenkinsfile

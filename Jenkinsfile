@@ -3,48 +3,29 @@ pipeline {
 
   environment {
     REGION = "ap-south-1"
-    ECR_REPO_URI = "329668418627.dkr.ecr.ap-south-1.amazonaws.com/mern-app"
-    IMAGE_TAG = "latest"
+    ECR_REGISTRY = "329668418627.dkr.ecr.ap-south-1.amazonaws.com"
   }
 
   stages {
 
-    stage("Checkout Latest Code") {
+    stage("Checkout Code") {
       steps {
         git branch: 'main', url: 'https://github.com/zebaaaa/mern-app.git'
       }
     }
 
-    stage('Login to ECR') {
+    stage("Login to ECR") {
       steps {
         sh '''
         aws ecr get-login-password --region $REGION |
-        docker login --username AWS --password-stdin ${ECR_REPO_URI%/*}
+        docker login --username AWS --password-stdin $ECR_REGISTRY
         '''
       }
     }
 
-    stage('Build Backend Image') {
+    stage("Deploy Containers") {
       steps {
         sh '''
-        docker build -t mern-app:$IMAGE_TAG .
-        '''
-      }
-    }
-
-    stage('Tag & Push to ECR') {
-      steps {
-        sh '''
-        docker tag mern-app:$IMAGE_TAG $ECR_REPO_URI:$IMAGE_TAG
-        docker push $ECR_REPO_URI:$IMAGE_TAG
-        '''
-      }
-    }
-
-    stage('Deploy using Docker Compose') {
-      steps {
-        sh '''
-        docker compose down || true
         docker compose pull
         docker compose up -d
         '''
